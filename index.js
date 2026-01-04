@@ -166,17 +166,16 @@
     a.click();
 }
 
-    async function downloadCurrent() {
-    const g = GALLERIES[currentGalleryKey];
-    const file = currentImages[currentIndex];
-    const res = await fetch(`${g.path}/${file}`);
-    const blob = await res.blob();
+    function downloadCurrent() {
+        const g = GALLERIES[currentGalleryKey];
+        const file = currentImages[currentIndex];
+        const a = document.createElement("a");
+        a.href = `${g.path}/${file}`;
+        a.download = file;
+        a.target = "_blank";
+        a.click();
+    }
 
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = file;
-    a.click();
-}
 
     /* -------------------------
     INIT
