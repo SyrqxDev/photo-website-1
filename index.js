@@ -6,7 +6,7 @@
     "PFI 3rd Jan": {
     title: "PFI 3rd Jan",
     description: "",
-    path: "galleries/PFI-3rd-Jan",
+    path: "https://originals.tristansharpe.com/pfi-3rd-jan",
     thumbs: "galleries/PFI-3rd-Jan/thumbs",
     manifest: "manifest.json"
 }
