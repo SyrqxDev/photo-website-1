@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Photo Galleries</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif; }
+    body { background:#0f0f0f; color:#fff; }
+
+    header { position:fixed; top:0; left:0; right:0; height:56px; background:#000; display:flex; align-items:center; padding:0 16px; z-index:20; }
+
+    .hamburger { cursor:pointer; width:28px; }
+    .hamburger div { height:3px; background:#fff; margin:5px 0; }
+
+    nav { position:fixed; top:56px; left:-260px; width:260px; height:100%; background:#151515; padding:16px; transition:left .3s; overflow-y:auto; }
+    nav.active { left:0; }
+    nav h3 { margin-bottom:10px; font-size:18px; }
+    nav button { width:100%; padding:10px; margin-bottom:8px; background:#222; color:#fff; border:none; border-radius:6px; text-align:left; cursor:pointer; }
+
+    main { padding-top:72px; }
+
+    .slideshow { max-width:1000px; margin:0 auto; padding:0 16px; }
+    .slideshow img { width:100%; height:45vh; max-height:520px; object-fit:cover; border-radius:12px; }
+
+    .meta { text-align:center; padding:20px 16px; }
+    .meta h1 { font-size:clamp(24px,5vw,40px); margin-bottom:10px; }
+    .meta p { font-size:16px; color:#ccc; max-width:700px; margin:0 auto 16px; }
+
+    .actions button, .actions a { margin:6px; background:none; border:none; color:#4db8ff; font-size:16px; cursor:pointer; }
+
+    .gallery { display:none; padding:16px; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; }
+    .gallery img { width:100%; height:140px; object-fit:cover; border-radius:8px; }
+
+    @media (min-width:768px) {
+      .gallery img { height:200px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+</header>
+
+<nav id="menu">
+  <h3>Galleries</h3>
+  <div id="galleryList"></div>
+</nav>
+
+<main>
+  <section id="home">
+    <div class="slideshow">
+      <img id="slide" src="" />
+    </div>
+
+    <div class="meta">
+      <h1 id="title"></h1>
+      <p id="description"></p>
+      <div class="actions">
+        <button onclick="downloadGallery()">Download Gallery</button>
+        <a href="#" onclick="showGallery()">View Full Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="gallery"></section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.9); z-index:50; align-items:center; justify-content:center; flex-direction:column; touch-action:pan-y;">
+    <img id="lightboxImg" style="max-width:90vw; max-height:80vh; margin-bottom:16px; border-radius:10px;" />
+    <div>
+      <button onclick="prevImage()" style="margin:6px;">◀ Prev</button>
+      <button onclick="downloadCurrent()" style="margin:6px;">⬇ Download</button>
+      <button onclick="nextImage()" style="margin:6px;">Next ▶</button>
+      <button onclick="closeLightbox()" style="margin:6px;">✕ Close</button>
+    </div>
+  </div>
+  </div>
+</main>
+
+<script src="index.js"></script>
+</body>
+</html>
