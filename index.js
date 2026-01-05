@@ -3,14 +3,15 @@
     CLIENT CONFIGURATION
     ========================= */
     const GALLERIES = {
-    "PFI 3rd Jan": {
-    title: "PFI 3rd Jan",
-    description: "",
-    path: "https://originals.tristansharpe.com/pfi-3rd-jan",
-    thumbs: "galleries/PFI-3rd-Jan/thumbs",
-    manifest: "manifest.json"
-}
-};
+        "PFI 3rd Jan": {
+            title: "PFI 3rd Jan",
+            description: "",
+            path: "https://originals.tristansharpe.com/pfi-3rd-jan",
+            thumbs: "galleries/PFI-3rd-Jan/thumbs",
+            manifest: "manifest.json",
+            zip: "https://originals.tristansharpe.com/pfi-3rd-jan/PFI-3rd-Jan.zip"
+        }
+    };
     /* ========================= */
 
     let currentGalleryKey = null;
@@ -150,21 +151,16 @@
     /* -------------------------
     DOWNLOADS
     ------------------------- */
-    async function downloadGallery() {
-    const zip = new JSZip();
-    const g = GALLERIES[currentGalleryKey];
+    function downloadGallery() {
+        const g = GALLERIES[currentGalleryKey];
+        if (!g.zip) {
+            alert("ZIP not available for this gallery yet.");
+            return;
+        }
+        // direct download link (no fetch, no CORS)
+        window.location.href = g.zip;
+    }
 
-    for (const file of currentImages) {
-    const res = await fetch(`${g.path}/${file}`);
-    zip.file(file, await res.blob());
-}
-
-    const blob = await zip.generateAsync({ type: "blob" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${g.title}.zip`;
-    a.click();
-}
 
     function downloadCurrent() {
         const g = GALLERIES[currentGalleryKey];
